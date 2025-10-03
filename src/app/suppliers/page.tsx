@@ -346,7 +346,7 @@ export default function SuppliersPage() {
                       Balance <ArrowUpDown className="ml-2 h-3 w-3" />
                     </Button>
                   </TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="text-right !bg-transparent">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
