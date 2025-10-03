@@ -368,7 +368,7 @@ export default function SuppliersPage() {
                       </span>
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => onEdit(s)} className="!text-black !bg-cyan-100">Edit</Button>
+                      <Button size="sm" variant="outline" onClick={() => onEdit(s)} className="!text-black !bg-white !opacity-100">Edit</Button>
                       <Button size="sm" variant="destructive" onClick={() => onDelete(s.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>
