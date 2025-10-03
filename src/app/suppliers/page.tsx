@@ -9,12 +9,12 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Search, ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 
-interface Supplier { 
-  id: number; 
+interface Supplier {
+  id: number;
   companyName: string;
   contactPerson: string;
-  email: string; 
-  phone: string; 
+  email: string;
+  phone: string;
   address?: string;
   balance: number;
 }
@@ -57,29 +57,29 @@ export default function SuppliersPage() {
 
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
-    
+
     if (!form.companyName?.trim()) {
       errors.companyName = "Company name is required";
     }
-    
+
     if (!form.contactPerson?.trim()) {
       errors.contactPerson = "Contact person is required";
     }
-    
+
     if (!form.email?.trim()) {
       errors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       errors.email = "Invalid email format";
     }
-    
+
     if (!form.phone?.trim()) {
       errors.phone = "Phone is required";
     }
-    
+
     if (form.balance !== undefined && isNaN(Number(form.balance))) {
       errors.balance = "Balance must be a number";
     }
-    
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -89,36 +89,36 @@ export default function SuppliersPage() {
       toast.error("Please fix form errors");
       return;
     }
-    
+
     const payload: Supplier = {
-      id: editingId ?? Math.max(0, ...suppliers.map(s => s.id)) + 1,
+      id: editingId ?? Math.max(0, ...suppliers.map((s) => s.id)) + 1,
       companyName: String(form.companyName ?? "").trim(),
       contactPerson: String(form.contactPerson ?? "").trim(),
       email: String(form.email ?? "").trim(),
       phone: String(form.phone ?? "").trim(),
       address: String(form.address ?? "").trim(),
-      balance: Number(form.balance ?? 0),
+      balance: Number(form.balance ?? 0)
     };
-    
+
     try {
       if (editingId) {
-        setSuppliers(prev => prev.map(s => s.id === editingId ? payload : s));
-        await fetch("/api/suppliers", { 
-          method: "PATCH", 
+        setSuppliers((prev) => prev.map((s) => s.id === editingId ? payload : s));
+        await fetch("/api/suppliers", {
+          method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload) 
+          body: JSON.stringify(payload)
         });
         toast.success("Supplier updated successfully");
       } else {
-        setSuppliers(prev => [payload, ...prev]);
-        await fetch("/api/suppliers", { 
-          method: "POST", 
+        setSuppliers((prev) => [payload, ...prev]);
+        await fetch("/api/suppliers", {
+          method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload) 
+          body: JSON.stringify(payload)
         });
         toast.success("Supplier created successfully");
       }
-      
+
       setOpen(false);
       setEditingId(null);
       setForm({});
@@ -138,7 +138,7 @@ export default function SuppliersPage() {
   const onDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this supplier?")) return;
     try {
-      setSuppliers(prev => prev.filter(s => s.id !== id));
+      setSuppliers((prev) => prev.filter((s) => s.id !== id));
       await fetch(`/api/suppliers?id=${id}`, { method: "DELETE" });
       toast.success("Supplier deleted successfully");
     } catch (e) {
@@ -148,20 +148,20 @@ export default function SuppliersPage() {
 
   // Filtered and sorted data
   const filteredAndSortedSuppliers = useMemo(() => {
-    let filtered = suppliers.filter(s => 
-      s.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.contactPerson.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.phone.includes(searchTerm)
+    let filtered = suppliers.filter((s) =>
+    s.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    s.contactPerson.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    s.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    s.phone.includes(searchTerm)
     );
 
     filtered.sort((a, b) => {
       let aVal = a[sortField];
       let bVal = b[sortField];
-      
+
       if (typeof aVal === "string") aVal = aVal.toLowerCase();
       if (typeof bVal === "string") bVal = bVal.toLowerCase();
-      
+
       if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
       if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
       return 0;
@@ -187,17 +187,17 @@ export default function SuppliersPage() {
     }
   };
 
-  const totalBalance = useMemo(() => 
-    suppliers.reduce((sum, s) => sum + s.balance, 0), 
-    [suppliers]
+  const totalBalance = useMemo(() =>
+  suppliers.reduce((sum, s) => sum + s.balance, 0),
+  [suppliers]
   );
 
   if (loading) return (
     <div className="flex items-center justify-center h-96">
       <div className="text-lg text-[var(--color-muted-foreground)]">Loading suppliers…</div>
-    </div>
-  );
-  
+    </div>);
+
+
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
@@ -209,7 +209,7 @@ export default function SuppliersPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button onClick={() => { setEditingId(null); setForm({}); setFormErrors({}); }}>New Supplier</Button>
+            <Button onClick={() => {setEditingId(null);setForm({});setFormErrors({});}}>New Supplier</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -218,63 +218,63 @@ export default function SuppliersPage() {
             <div className="grid gap-4 py-2">
               <div className="grid gap-2">
                 <Label htmlFor="companyName">Company Name <span className="text-red-500">*</span></Label>
-                <Input 
-                  id="companyName" 
-                  value={form.companyName ?? ""} 
-                  onChange={(e) => setForm(f => ({...f, companyName: e.target.value}))}
-                  className={formErrors.companyName ? "border-red-500" : ""}
-                />
+                <Input
+                  id="companyName"
+                  value={form.companyName ?? ""}
+                  onChange={(e) => setForm((f) => ({ ...f, companyName: e.target.value }))}
+                  className={formErrors.companyName ? "border-red-500" : ""} />
+
                 {formErrors.companyName && <p className="text-xs text-red-500">{formErrors.companyName}</p>}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="contactPerson">Contact Person <span className="text-red-500">*</span></Label>
-                <Input 
-                  id="contactPerson" 
-                  value={form.contactPerson ?? ""} 
-                  onChange={(e) => setForm(f => ({...f, contactPerson: e.target.value}))}
-                  className={formErrors.contactPerson ? "border-red-500" : ""}
-                />
+                <Input
+                  id="contactPerson"
+                  value={form.contactPerson ?? ""}
+                  onChange={(e) => setForm((f) => ({ ...f, contactPerson: e.target.value }))}
+                  className={formErrors.contactPerson ? "border-red-500" : ""} />
+
                 {formErrors.contactPerson && <p className="text-xs text-red-500">{formErrors.contactPerson}</p>}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email <span className="text-red-500">*</span></Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  value={form.email ?? ""} 
-                  onChange={(e) => setForm(f => ({...f, email: e.target.value}))}
-                  className={formErrors.email ? "border-red-500" : ""}
-                />
+                <Input
+                  id="email"
+                  type="email"
+                  value={form.email ?? ""}
+                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                  className={formErrors.email ? "border-red-500" : ""} />
+
                 {formErrors.email && <p className="text-xs text-red-500">{formErrors.email}</p>}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="phone">Phone <span className="text-red-500">*</span></Label>
-                <Input 
-                  id="phone" 
-                  value={form.phone ?? ""} 
-                  onChange={(e) => setForm(f => ({...f, phone: e.target.value}))}
-                  className={formErrors.phone ? "border-red-500" : ""}
-                />
+                <Input
+                  id="phone"
+                  value={form.phone ?? ""}
+                  onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                  className={formErrors.phone ? "border-red-500" : ""} />
+
                 {formErrors.phone && <p className="text-xs text-red-500">{formErrors.phone}</p>}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="address">Address</Label>
-                <Input 
-                  id="address" 
-                  value={form.address ?? ""} 
-                  onChange={(e) => setForm(f => ({...f, address: e.target.value}))} 
-                />
+                <Input
+                  id="address"
+                  value={form.address ?? ""}
+                  onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))} />
+
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="balance">Balance</Label>
-                <Input 
-                  id="balance" 
-                  type="number" 
+                <Input
+                  id="balance"
+                  type="number"
                   step="0.01"
-                  value={form.balance ?? 0} 
-                  onChange={(e) => setForm(f => ({...f, balance: parseFloat(e.target.value) || 0}))}
-                  className={formErrors.balance ? "border-red-500" : ""}
-                />
+                  value={form.balance ?? 0}
+                  onChange={(e) => setForm((f) => ({ ...f, balance: parseFloat(e.target.value) || 0 }))}
+                  className={formErrors.balance ? "border-red-500" : ""} />
+
                 {formErrors.balance && <p className="text-xs text-red-500">{formErrors.balance}</p>}
               </div>
             </div>
@@ -316,8 +316,8 @@ export default function SuppliersPage() {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="pl-8"
-              />
+                className="pl-8" />
+
             </div>
           </div>
         </CardHeader>
@@ -350,15 +350,15 @@ export default function SuppliersPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {paginatedSuppliers.length === 0 && (
-                  <TableRow>
+                {paginatedSuppliers.length === 0 &&
+                <TableRow>
                     <TableCell colSpan={5} className="text-center text-[var(--color-muted-foreground)]">
                       {searchTerm ? "No suppliers found" : "No suppliers yet"}
                     </TableCell>
                   </TableRow>
-                )}
-                {paginatedSuppliers.map(s => (
-                  <TableRow key={s.id}>
+                }
+                {paginatedSuppliers.map((s) =>
+                <TableRow key={s.id}>
                     <TableCell className="font-medium">{s.companyName}</TableCell>
                     <TableCell>{s.contactPerson}</TableCell>
                     <TableCell>{s.phone}</TableCell>
@@ -368,45 +368,45 @@ export default function SuppliersPage() {
                       </span>
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => onEdit(s)}>Edit</Button>
+                      <Button size="sm" variant="outline" onClick={() => onEdit(s)} className="!text-black !bg-cyan-100">Edit</Button>
                       <Button size="sm" variant="destructive" onClick={() => onDelete(s.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>
-                ))}
+                )}
               </TableBody>
             </Table>
           </div>
 
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-4">
+          {totalPages > 1 &&
+          <div className="flex items-center justify-between mt-4">
               <p className="text-sm text-[var(--color-muted-foreground)]">
-                Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredAndSortedSuppliers.length)} of {filteredAndSortedSuppliers.length} suppliers
+                Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, filteredAndSortedSuppliers.length)} of {filteredAndSortedSuppliers.length} suppliers
               </p>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                >
+                variant="outline"
+                size="sm"
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}>
+
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
                 <span className="text-sm">
                   Page {currentPage} of {totalPages}
                 </span>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                  disabled={currentPage === totalPages}
-                >
+                variant="outline"
+                size="sm"
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}>
+
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
             </div>
-          )}
+          }
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 }
