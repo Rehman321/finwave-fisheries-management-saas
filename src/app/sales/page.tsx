@@ -8,7 +8,6 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, ArrowUpDown, ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 
 interface SaleLineItem {
   productId: number;
@@ -392,14 +391,13 @@ export default function SalesPage() {
                               ${item.total.toFixed(2)}
                             </TableCell>
                             <TableCell>
-                              <Button
+                              <button
                                 type="button"
-                                size="sm"
-                                variant="ghost"
                                 onClick={() => removeLineItem(index)}
+                                className="inline-flex items-center justify-center h-8 w-8 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
                               >
                                 <Trash2 className="h-4 w-4 text-red-500" />
-                              </Button>
+                              </button>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -504,24 +502,36 @@ export default function SalesPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("invoiceNo")} className="h-8 px-2">
-                      Invoice # <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("invoiceNo")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Invoice # <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("customerName")} className="h-8 px-2">
-                      Customer <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("customerName")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Customer <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("date")} className="h-8 px-2">
-                      Date <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("date")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Date <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("total")} className="h-8 px-2">
-                      Amount <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("total")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Amount <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -591,25 +601,23 @@ export default function SalesPage() {
                 Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredAndSortedSales.length)} of {filteredAndSortedSales.length} sales
               </p>
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
+                  className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded border border-input bg-background hover:bg-accent hover:text-accent-foreground transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft className="h-4 w-4" />
-                </Button>
+                </button>
                 <span className="text-sm">
                   Page {currentPage} of {totalPages}
                 </span>
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
+                  className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded border border-input bg-background hover:bg-accent hover:text-accent-foreground transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronRight className="h-4 w-4" />
-                </Button>
+                </button>
               </div>
             </div>
           )}

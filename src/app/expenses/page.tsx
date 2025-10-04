@@ -2,7 +2,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -424,21 +423,30 @@ export default function ExpensesPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("date")} className="h-8 px-2">
-                      Date <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("date")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Date <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>Ref</TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("category")} className="h-8 px-2">
-                      Category <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("category")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Category <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>Description</TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("amount")} className="h-8 px-2">
-                      Amount <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("amount")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Amount <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -488,25 +496,23 @@ export default function ExpensesPage() {
                 Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredAndSortedItems.length)} of {filteredAndSortedItems.length} expenses
               </p>
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
+                  className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded border border-input bg-background hover:bg-accent hover:text-accent-foreground transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft className="h-4 w-4" />
-                </Button>
+                </button>
                 <span className="text-sm">
                   Page {currentPage} of {totalPages}
                 </span>
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
+                  className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded border border-input bg-background hover:bg-accent hover:text-accent-foreground transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronRight className="h-4 w-4" />
-                </Button>
+                </button>
               </div>
             </div>
           )}
