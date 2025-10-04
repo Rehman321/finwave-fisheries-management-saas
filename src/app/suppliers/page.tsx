@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -209,7 +208,12 @@ export default function SuppliersPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button onClick={() => {setEditingId(null);setForm({});setFormErrors({});}}>New Supplier</Button>
+            <button 
+              onClick={() => {setEditingId(null);setForm({});setFormErrors({});}}
+              className="inline-block bg-blue-100 text-blue-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-blue-200 transition"
+            >
+              New Supplier
+            </button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -223,7 +227,6 @@ export default function SuppliersPage() {
                   value={form.companyName ?? ""}
                   onChange={(e) => setForm((f) => ({ ...f, companyName: e.target.value }))}
                   className={formErrors.companyName ? "border-red-500" : ""} />
-
                 {formErrors.companyName && <p className="text-xs text-red-500">{formErrors.companyName}</p>}
               </div>
               <div className="grid gap-2">
@@ -233,7 +236,6 @@ export default function SuppliersPage() {
                   value={form.contactPerson ?? ""}
                   onChange={(e) => setForm((f) => ({ ...f, contactPerson: e.target.value }))}
                   className={formErrors.contactPerson ? "border-red-500" : ""} />
-
                 {formErrors.contactPerson && <p className="text-xs text-red-500">{formErrors.contactPerson}</p>}
               </div>
               <div className="grid gap-2">
@@ -244,7 +246,6 @@ export default function SuppliersPage() {
                   value={form.email ?? ""}
                   onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                   className={formErrors.email ? "border-red-500" : ""} />
-
                 {formErrors.email && <p className="text-xs text-red-500">{formErrors.email}</p>}
               </div>
               <div className="grid gap-2">
@@ -254,7 +255,6 @@ export default function SuppliersPage() {
                   value={form.phone ?? ""}
                   onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   className={formErrors.phone ? "border-red-500" : ""} />
-
                 {formErrors.phone && <p className="text-xs text-red-500">{formErrors.phone}</p>}
               </div>
               <div className="grid gap-2">
@@ -263,7 +263,6 @@ export default function SuppliersPage() {
                   id="address"
                   value={form.address ?? ""}
                   onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))} />
-
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="balance">Balance</Label>
@@ -274,13 +273,22 @@ export default function SuppliersPage() {
                   value={form.balance ?? 0}
                   onChange={(e) => setForm((f) => ({ ...f, balance: parseFloat(e.target.value) || 0 }))}
                   className={formErrors.balance ? "border-red-500" : ""} />
-
                 {formErrors.balance && <p className="text-xs text-red-500">{formErrors.balance}</p>}
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-              <Button onClick={saveSupplier}>{editingId ? "Save Changes" : "Create"}</Button>
+              <button 
+                onClick={() => setOpen(false)}
+                className="inline-block bg-gray-100 text-gray-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-gray-200 transition"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={saveSupplier}
+                className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-indigo-200 transition"
+              >
+                {editingId ? "Save Changes" : "Create"}
+              </button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -317,7 +325,6 @@ export default function SuppliersPage() {
                   setCurrentPage(1);
                 }}
                 className="pl-8" />
-
             </div>
           </div>
         </CardHeader>
@@ -346,7 +353,7 @@ export default function SuppliersPage() {
                       Balance <ArrowUpDown className="ml-2 h-3 w-3" />
                     </Button>
                   </TableHead>
-                  <TableHead className="text-right !bg-transparent">Actions</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -368,8 +375,18 @@ export default function SuppliersPage() {
                       </span>
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => onEdit(s)} className="!text-black !bg-white !opacity-100">Edit</Button>
-                      <Button size="sm" variant="destructive" onClick={() => onDelete(s.id)}>Delete</Button>
+                      <button 
+                        onClick={() => onEdit(s)}
+                        className="inline-block bg-green-100 text-green-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-green-200 transition"
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        onClick={() => onDelete(s.id)}
+                        className="inline-block bg-red-100 text-red-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-red-200 transition"
+                      >
+                        Delete
+                      </button>
                     </TableCell>
                   </TableRow>
                 )}
@@ -388,7 +405,6 @@ export default function SuppliersPage() {
                 size="sm"
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}>
-
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
                 <span className="text-sm">
@@ -399,7 +415,6 @@ export default function SuppliersPage() {
                 size="sm"
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}>
-
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -408,5 +423,4 @@ export default function SuppliersPage() {
         </CardContent>
       </Card>
     </div>);
-
 }

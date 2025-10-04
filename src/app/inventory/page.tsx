@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -83,7 +82,12 @@ export default function InventoryPage() {
         <h1 className="text-2xl font-semibold">Inventory</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button onClick={() => { setEditingId(null); setForm({ type: "fresh" as any, availability: "in_stock" }); }}>Add Fish</Button>
+            <button 
+              onClick={() => { setEditingId(null); setForm({ type: "fresh" as any, availability: "in_stock" }); }}
+              className="inline-block bg-blue-100 text-blue-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-blue-200 transition"
+            >
+              Add Fish
+            </button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -132,7 +136,12 @@ export default function InventoryPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button onClick={saveItem}>{editingId ? "Save changes" : "Create"}</Button>
+              <button 
+                onClick={saveItem}
+                className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-indigo-200 transition"
+              >
+                {editingId ? "Save changes" : "Create"}
+              </button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -186,8 +195,18 @@ export default function InventoryPage() {
                     </span>
                   </TableCell>
                   <TableCell className="text-right space-x-2">
-                    <Button variant="outline" size="sm" onClick={() => onEdit(item)}>Edit</Button>
-                    <Button variant="destructive" size="sm" onClick={() => onDelete(item.id)}>Delete</Button>
+                    <button 
+                      onClick={() => onEdit(item)}
+                      className="inline-block bg-green-100 text-green-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-green-200 transition"
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      onClick={() => onDelete(item.id)}
+                      className="inline-block bg-red-100 text-red-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-red-200 transition"
+                    >
+                      Delete
+                    </button>
                   </TableCell>
                 </TableRow>
               ))}

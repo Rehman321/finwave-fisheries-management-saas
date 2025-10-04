@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +8,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, ArrowUpDown, ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface SaleLineItem {
   productId: number;
@@ -288,7 +288,12 @@ export default function SalesPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button onClick={() => { setEditingId(null); resetForm(); }}>New Sale</Button>
+            <button 
+              onClick={() => { setEditingId(null); resetForm(); }}
+              className="inline-block bg-blue-100 text-blue-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-blue-200 transition"
+            >
+              New Sale
+            </button>
           </DialogTrigger>
           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
@@ -328,9 +333,13 @@ export default function SalesPage() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <Label>Line Items <span className="text-red-500">*</span></Label>
-                  <Button type="button" size="sm" variant="outline" onClick={addLineItem}>
+                  <button 
+                    type="button" 
+                    onClick={addLineItem}
+                    className="inline-flex items-center bg-blue-100 text-blue-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-blue-200 transition"
+                  >
                     <Plus className="h-4 w-4 mr-1" /> Add Product
-                  </Button>
+                  </button>
                 </div>
                 
                 {form.lineItems && form.lineItems.length > 0 && (
@@ -435,8 +444,18 @@ export default function SalesPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-              <Button onClick={saveSale}>{editingId ? "Save Changes" : "Create Sale"}</Button>
+              <button 
+                onClick={() => setOpen(false)}
+                className="inline-block bg-gray-100 text-gray-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-gray-200 transition"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={saveSale}
+                className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-indigo-200 transition"
+              >
+                {editingId ? "Save Changes" : "Create Sale"}
+              </button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -547,8 +566,18 @@ export default function SalesPage() {
                       </Select>
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => onEdit(sale)}>Edit</Button>
-                      <Button size="sm" variant="destructive" onClick={() => onDelete(sale.id)}>Delete</Button>
+                      <button 
+                        onClick={() => onEdit(sale)}
+                        className="inline-block bg-green-100 text-green-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-green-200 transition"
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        onClick={() => onDelete(sale.id)}
+                        className="inline-block bg-red-100 text-red-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-red-200 transition"
+                      >
+                        Delete
+                      </button>
                     </TableCell>
                   </TableRow>
                 ))}

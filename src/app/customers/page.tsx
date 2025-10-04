@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -202,7 +201,12 @@ export default function CustomersPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button onClick={() => { setEditingId(null); setForm({}); setFormErrors({}); }}>New Customer</Button>
+            <button 
+              onClick={() => { setEditingId(null); setForm({}); setFormErrors({}); }}
+              className="inline-block bg-blue-100 text-blue-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-blue-200 transition"
+            >
+              New Customer
+            </button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -262,8 +266,18 @@ export default function CustomersPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-              <Button onClick={saveCustomer}>{editingId ? "Save Changes" : "Create"}</Button>
+              <button 
+                onClick={() => setOpen(false)}
+                className="inline-block bg-gray-100 text-gray-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-gray-200 transition"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={saveCustomer}
+                className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-indigo-200 transition"
+              >
+                {editingId ? "Save Changes" : "Create"}
+              </button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -351,8 +365,18 @@ export default function CustomersPage() {
                       </span>
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => onEdit(c)}>Edit</Button>
-                      <Button size="sm" variant="destructive" onClick={() => onDelete(c.id)}>Delete</Button>
+                      <button 
+                        onClick={() => onEdit(c)}
+                        className="inline-block bg-green-100 text-green-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-green-200 transition"
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        onClick={() => onDelete(c.id)}
+                        className="inline-block bg-red-100 text-red-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-red-200 transition"
+                      >
+                        Delete
+                      </button>
                     </TableCell>
                   </TableRow>
                 ))}
