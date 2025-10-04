@@ -324,24 +324,36 @@ export default function CustomersPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("name")} className="h-8 px-2">
-                      Name <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("name")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Name <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("email")} className="h-8 px-2">
-                      Email <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("email")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Email <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("phone")} className="h-8 px-2">
-                      Phone <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("phone")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Phone <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("outstandingBalance")} className="h-8 px-2">
-                      Outstanding Balance <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("outstandingBalance")} 
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Outstanding Balance <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -390,25 +402,23 @@ export default function CustomersPage() {
                 Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredAndSortedCustomers.length)} of {filteredAndSortedCustomers.length} customers
               </p>
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
+                  className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded border border-input bg-background hover:bg-accent hover:text-accent-foreground transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft className="h-4 w-4" />
-                </Button>
+                </button>
                 <span className="text-sm">
                   Page {currentPage} of {totalPages}
                 </span>
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
+                  className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded border border-input bg-background hover:bg-accent hover:text-accent-foreground transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronRight className="h-4 w-4" />
-                </Button>
+                </button>
               </div>
             </div>
           )}
