@@ -137,10 +137,16 @@ export default function InventoryPage() {
             </div>
             <DialogFooter>
               <button 
+                onClick={() => setOpen(false)}
+                className="inline-block bg-gray-100 text-gray-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-gray-200 transition"
+              >
+                Cancel
+              </button>
+              <button 
                 onClick={saveItem}
                 className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-indigo-200 transition"
               >
-                {editingId ? "Save changes" : "Create"}
+                {editingId ? "Save Changes" : "Create"}
               </button>
             </DialogFooter>
           </DialogContent>

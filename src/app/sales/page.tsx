@@ -335,7 +335,7 @@ export default function SalesPage() {
                   <button 
                     type="button" 
                     onClick={addLineItem}
-                    className="inline-flex items-center bg-blue-100 text-blue-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-blue-200 transition"
+                    className="inline-flex items-center bg-blue-100 text-blue-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-blue-200 transition"
                   >
                     <Plus className="h-4 w-4 mr-1" /> Add Product
                   </button>
@@ -394,9 +394,9 @@ export default function SalesPage() {
                               <button
                                 type="button"
                                 onClick={() => removeLineItem(index)}
-                                className="inline-flex items-center justify-center h-8 w-8 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                                className="inline-flex items-center justify-center h-8 w-8 bg-red-100 text-red-700 rounded-full hover:bg-red-200 transition"
                               >
-                                <Trash2 className="h-4 w-4 text-red-500" />
+                                <Trash2 className="h-4 w-4" />
                               </button>
                             </TableCell>
                           </TableRow>
