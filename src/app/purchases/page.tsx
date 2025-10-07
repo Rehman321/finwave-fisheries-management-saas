@@ -316,7 +316,12 @@ export default function PurchasesPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button onClick={() => { setEditingId(null); resetForm(); }}>New Purchase</Button>
+            <button 
+              onClick={() => { setEditingId(null); resetForm(); }}
+              className="inline-block bg-blue-100 text-blue-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-blue-200 transition"
+            >
+              New Purchase
+            </button>
           </DialogTrigger>
           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
@@ -356,9 +361,13 @@ export default function PurchasesPage() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <Label>Line Items <span className="text-red-500">*</span></Label>
-                  <Button type="button" size="sm" variant="outline" onClick={addLineItem}>
+                  <button 
+                    type="button"
+                    onClick={addLineItem}
+                    className="inline-flex items-center bg-gray-100 text-gray-700 px-3 py-1.5 text-sm font-medium rounded-full hover:bg-gray-200 transition"
+                  >
                     <Plus className="h-4 w-4 mr-1" /> Add Product
-                  </Button>
+                  </button>
                 </div>
                 
                 {form.lineItems && form.lineItems.length > 0 && (
@@ -411,14 +420,13 @@ export default function PurchasesPage() {
                               ${item.total.toFixed(2)}
                             </TableCell>
                             <TableCell>
-                              <Button
+                              <button
                                 type="button"
-                                size="sm"
-                                variant="ghost"
                                 onClick={() => removeLineItem(index)}
+                                className="inline-flex items-center justify-center h-8 w-8 rounded-full hover:bg-red-50 transition"
                               >
                                 <Trash2 className="h-4 w-4 text-red-500" />
-                              </Button>
+                              </button>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -463,8 +471,18 @@ export default function PurchasesPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-              <Button onClick={savePurchase}>{editingId ? "Save Changes" : "Create Purchase"}</Button>
+              <button 
+                onClick={() => setOpen(false)}
+                className="inline-block bg-gray-100 text-gray-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-gray-200 transition"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={savePurchase}
+                className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 text-sm font-medium rounded-full hover:bg-indigo-200 transition"
+              >
+                {editingId ? "Save Changes" : "Create Purchase"}
+              </button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -513,24 +531,36 @@ export default function PurchasesPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("supplierName")} className="h-8 px-2">
-                      Supplier <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("supplierName")}
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Supplier <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("date")} className="h-8 px-2">
-                      Date <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("date")}
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Date <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("invoiceNo")} className="h-8 px-2">
-                      Invoice # <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("invoiceNo")}
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Invoice # <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>
-                    <Button variant="ghost" size="sm" onClick={() => handleSort("total")} className="h-8 px-2">
-                      Amount <ArrowUpDown className="ml-2 h-3 w-3" />
-                    </Button>
+                    <button 
+                      onClick={() => handleSort("total")}
+                      className="h-8 px-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded transition"
+                    >
+                      Amount <ArrowUpDown className="ml-2 h-3 w-3 inline" />
+                    </button>
                   </TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -575,8 +605,18 @@ export default function PurchasesPage() {
                       </Select>
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => onEdit(purchase)}>Edit</Button>
-                      <Button size="sm" variant="destructive" onClick={() => onDelete(purchase.id)}>Delete</Button>
+                      <button 
+                        onClick={() => onEdit(purchase)}
+                        className="inline-block bg-green-100 text-green-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-green-200 transition"
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        onClick={() => onDelete(purchase.id)}
+                        className="inline-block bg-red-100 text-red-700 px-3 py-1 text-sm font-medium rounded-full hover:bg-red-200 transition"
+                      >
+                        Delete
+                      </button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -590,25 +630,23 @@ export default function PurchasesPage() {
                 Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredAndSortedPurchases.length)} of {filteredAndSortedPurchases.length} purchases
               </p>
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
+                  className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded border border-input bg-background hover:bg-accent hover:text-accent-foreground transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft className="h-4 w-4" />
-                </Button>
+                </button>
                 <span className="text-sm">
                   Page {currentPage} of {totalPages}
                 </span>
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
+                  className="inline-flex items-center justify-center h-8 px-3 text-sm font-medium rounded border border-input bg-background hover:bg-accent hover:text-accent-foreground transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronRight className="h-4 w-4" />
-                </Button>
+                </button>
               </div>
             </div>
           )}
