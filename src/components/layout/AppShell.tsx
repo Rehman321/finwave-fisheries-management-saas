@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, Fish, Boxes, ShoppingCart, Users, Home, Landmark, Banknote, Wallet, UserCircle, Building2, FileText, Package, DollarSign, Calculator, Tag, UsersRound, BarChart3, ChevronDown } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, Fish, Boxes, ShoppingCart, Users, Home, Landmark, Banknote, Wallet, UserCircle, Building2, FileText, Package, DollarSign, Calculator, Tag, UsersRound, BarChart3, ChevronDown, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -12,6 +12,16 @@ import {
 import React, { useState } from "react";
 import { useRole } from "@/hooks/useRole";
 import { PdcNotificationDropdown } from "./PdcNotificationDropdown";
+import { authClient, useSession } from "@/lib/auth-client";
+import { toast } from "sonner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const nav = [
   { href: "/", label: "Dashboard", icon: Home },
@@ -175,6 +185,35 @@ function MobileNav() {
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const { role, setRole } = useRole();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { data: session, isPending, refetch } = useSession();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Don't show AppShell on sign-in page
+  if (pathname === "/sign-in") {
+    return <>{children}</>;
+  }
+
+  const handleSignOut = async () => {
+    const token = localStorage.getItem("bearer_token");
+
+    const { error } = await authClient.signOut({
+      fetchOptions: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
+
+    if (error?.code) {
+      toast.error("Failed to sign out. Please try again.");
+    } else {
+      localStorage.removeItem("bearer_token");
+      refetch();
+      toast.success("Signed out successfully");
+      router.push("/sign-in");
+    }
+  };
   
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
@@ -200,17 +239,32 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             {/* PDC Notification Bell */}
             <PdcNotificationDropdown />
             
-            {/* Role Switcher */}
-            <label className="text-xs text-[var(--color-muted-foreground)]">Role</label>
-            <select
-              className="rounded-md border border-[var(--color-border)] bg-background px-2 py-1 text-sm"
-              value={role}
-              onChange={(e) => setRole(e.target.value as any)}
-            >
-              <option>Admin</option>
-              <option>Manager</option>
-              <option>Staff</option>
-            </select>
+            {/* User Profile Dropdown */}
+            {!isPending && session?.user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <User className="h-4 w-4" />
+                    <span className="hidden sm:inline">{session.user.email}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium">{session.user.name}</p>
+                      <p className="text-xs text-[var(--color-muted-foreground)]">
+                        {session.user.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="text-[var(--color-destructive)] cursor-pointer">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
       </header>

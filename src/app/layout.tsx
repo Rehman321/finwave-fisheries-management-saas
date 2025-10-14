@@ -4,6 +4,7 @@ import VisualEditsMessenger from "../visual-edits/VisualEditsMessenger";
 import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 import AppShell from "../components/layout/AppShell";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "FinWave | Fisheries Operations Platform",
@@ -31,6 +32,7 @@ export default function RootLayout({
           data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
         />
         <AppShell>{children}</AppShell>
+        <Toaster />
         <VisualEditsMessenger />
       </body>
     </html>
