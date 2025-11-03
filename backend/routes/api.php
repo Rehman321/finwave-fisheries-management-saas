@@ -23,4 +23,15 @@ Route::apiResource('cities', CityController::class);
 Route::apiResource('customers', CustomerController::class);
 Route::apiResource('bookings', BookingController::class);
 
+use App\Http\Controllers\Api\V1\AuthController as V1AuthController;
+
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
+
+Route::prefix('v1')->group(function () {
+    Route::post('/auth/login', [V1AuthController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/auth/logout', [V1AuthController::class, 'logout']);
+        Route::get('/auth/me', [V1AuthController::class, 'me']);
+    });
+});
