@@ -34,4 +34,11 @@ Route::prefix('v1')->group(function () {
         Route::post('/auth/logout', [V1AuthController::class, 'logout']);
         Route::get('/auth/me', [V1AuthController::class, 'me']);
     });
+
+    // Admin token management (list/revoke tokens)
+    Route::middleware(['auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
+        Route::get('/users/{user}/tokens', [\App\Http\Controllers\Api\V1\Admin\UserTokenController::class, 'index']);
+        Route::delete('/users/{user}/tokens/{token}', [\App\Http\Controllers\Api\V1\Admin\UserTokenController::class, 'destroy']);
+        Route::delete('/users/{user}/tokens', [\App\Http\Controllers\Api\V1\Admin\UserTokenController::class, 'destroyAll']);
+    });
 });

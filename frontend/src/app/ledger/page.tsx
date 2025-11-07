@@ -36,7 +36,12 @@ export default function LedgerPage() {
   const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ type: "payment", ref: "", description: "", amount: "" });
+  const [form, setForm] = useState<{ type: "order" | "payment" | "expense" | "misc"; ref: string; description: string; amount: string }>({ 
+    type: "payment", 
+    ref: "", 
+    description: "", 
+    amount: "" 
+  });
   const [editingId, setEditingId] = useState<number | null>(null);
 
   // Filters
@@ -254,7 +259,11 @@ export default function LedgerPage() {
             <div className="grid gap-4 py-2">
               <div className="grid gap-2">
                 <Label>Type <span className="text-red-500">*</span></Label>
-                <select value={form.type} onChange={(e) => setForm(f => ({ ...f, type: e.target.value }))} className="rounded-md border border-[var(--color-border)] bg-background px-3 py-2 text-sm">
+                <select 
+                  value={form.type} 
+                  onChange={(e) => setForm(f => ({ ...f, type: e.target.value as "order" | "payment" | "expense" | "misc" }))} 
+                  className="rounded-md border border-[var(--color-border)] bg-background px-3 py-2 text-sm"
+                >
                   <option value="order">Order</option>
                   <option value="payment">Payment</option>
                   <option value="expense">Expense</option>
